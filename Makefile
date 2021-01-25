@@ -11,7 +11,7 @@ install-portal:
 	@echo "Installing Litmus-Portal"
 	@echo "-----------"
 	chmod 755 k8s_scripts/LitmusInstall.sh
-	./k8s_scripts/LitmusInstall.sh"
+	./k8s_scripts/LitmusInstall.sh
 
 .PHONY: cypress-setup
 cypress-setup:
