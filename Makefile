@@ -19,7 +19,7 @@ cypress-setup:
 	@echo "-----------"
 	@echo "Warming up the cached dependencies of Cypress."
 	@echo "-----------"
-	cd CypressE2E && npm ci --prefer-offline
+	cd Cypress && npm ci --prefer-offline
 
 .PHONY: pre-test-setup
 pre-test-setup:
