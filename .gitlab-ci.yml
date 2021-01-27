@@ -1,12 +1,12 @@
 stages:
-  - cluster-setup
-  - portal-setup
+  # - cluster-setup
+  # - portal-setup
   - cypress-setup
   - basic-auth-tests
   - gui-tests
-  - e2e-metrics
-  - portal-cleanup
-  - cluster-cleanup
+  # - e2e-metrics
+  # - portal-cleanup
+  # - cluster-cleanup
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
@@ -19,32 +19,32 @@ cache: &global_cache
     - cache/Cypress
     - Cypress/node_modules
 
-EKS-Setup:
-  stage: cluster-setup
-  tags:
-    - kubera-litmus
-  script:
-    - chmod 755 build/eks/1-cluster-setup/setup
-    - ./build/eks/1-cluster-setup/setup
-  artifacts:
-    when: always
-    paths:
-      - .kube/
-  cache: {}
+# EKS-Setup:
+#   stage: cluster-setup
+#   tags:
+#     - kubera-litmus
+#   script:
+#     - chmod 755 build/eks/1-cluster-setup/setup
+#     - ./build/eks/1-cluster-setup/setup
+#   artifacts:
+#     when: always
+#     paths:
+#       - .kube/
+#   cache: {}
 
-Portal-Setup:
-  when: always
-  stage: portal-setup
-  tags: 
-    - kubera-litmus
-  script:
-    - make install-portal
-  artifacts:
-    when: always
-    paths:
-      - .kube/
-      - url.txt
-  cache: {}
+# Portal-Setup:
+#   when: always
+#   stage: portal-setup
+#   tags: 
+#     - kubera-litmus
+#   script:
+#     - make install-portal
+#   artifacts:
+#     when: always
+#     paths:
+#       - .kube/
+#       - url.txt
+#   cache: {}
 
 Cypress-Setup:
   when: always
@@ -122,42 +122,42 @@ TCID-VMWx-Portal-GUI-BrowseWorkflows:
     - source url.txt
     - make browse-workflow-check
 
-e2e-metric:
-  when: always
-  stage: e2e-metrics
-  tags: 
-    - kubera-litmus
-  script:
-    - make e2e-metrics
-  artifacts:
-    when: always
-    paths:
-      - .kube/
-  cache: {}
+# e2e-metric:
+#   when: always
+#   stage: e2e-metrics
+#   tags: 
+#     - kubera-litmus
+#   script:
+#     - make e2e-metrics
+#   artifacts:
+#     when: always
+#     paths:
+#       - .kube/
+#   cache: {}
 
-portal-cleanup:
-  when: always
-  stage: portal-cleanup
-  tags: 
-    - kubera-litmus
-  script:
-    - make uninstall-portal
-  artifacts:
-    when: always
-    paths:
-      - .kube/
-  cache: {}
+# portal-cleanup:
+#   when: always
+#   stage: portal-cleanup
+#   tags: 
+#     - kubera-litmus
+#   script:
+#     - make uninstall-portal
+#   artifacts:
+#     when: always
+#     paths:
+#       - .kube/
+#   cache: {}
     
-EKS-Cleanup:
-  when: always
-  stage: cluster-cleanup
-  tags:
-    - kubera-litmus
-  script:
-    - chmod 755 build/eks/2-cluster-cleanup/cleanup
-    - ./build/eks/2-cluster-cleanup/cleanup
-  artifacts:
-    when: always
-    paths:
-      - .kube/
-  cache: {}
+# EKS-Cleanup:
+#   when: always
+#   stage: cluster-cleanup
+#   tags:
+#     - kubera-litmus
+#   script:
+#     - chmod 755 build/eks/2-cluster-cleanup/cleanup
+#     - ./build/eks/2-cluster-cleanup/cleanup
+#   artifacts:
+#     when: always
+#     paths:
+#       - .kube/
+#   cache: {}
