@@ -17,7 +17,7 @@ cache: &global_cache
   paths:
     - .npm
     - cache/Cypress
-    - CypressE2E/node_modules
+    - Cypress/node_modules
 
 EKS-Setup:
   stage: cluster-setup
@@ -49,7 +49,7 @@ Portal-Setup:
 Cypress-Setup:
   when: always
   stage: cypress-setup
-  image: cypress/base:10
+  image: jonsy13/cypress:buster-slim
   tags:
     - kubera-litmus
   script:
@@ -61,7 +61,7 @@ TCID-VMWx-Portal-GUI-Auth:
   dependencies:
     - Portal-Setup
   image:
-    name: cypress/base:10
+    name: jonsy13/cypress:buster-slim
   tags:
     - kubera-litmus
   script:
@@ -81,11 +81,9 @@ TCID-VMWx-Portal-GUI-Auth:
   dependencies:
     - Portal-Setup
   image:
-    name: cypress/base:10
+    name: jonsy13/cypress:buster-slim
   tags:
     - kubera-litmus
-  before_script:
-    - echo ${FRONTEND_IP}
   artifacts:
     when: always
     paths:
