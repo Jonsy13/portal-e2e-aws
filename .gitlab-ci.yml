@@ -3,7 +3,7 @@ stages:
   # - portal-setup
   - cypress-setup
   - basic-auth-tests
-  - gui-tests
+  # - gui-tests
   # - e2e-metrics
   # - portal-cleanup
   # - cluster-cleanup
@@ -58,14 +58,14 @@ Cypress-Setup:
 TCID-VMWx-Portal-GUI-Auth:
   when: always
   stage: basic-auth-tests
-  dependencies:
-    - Portal-Setup
+  # dependencies:
+  #   - Portal-Setup
   image:
     name: jonsy13/cypress:buster-slim
   tags:
     - kubera-litmus
   script:
-    - source url.txt
+    # - source url.txt
     - make pre-test-setup
   artifacts:
     when: always
@@ -75,52 +75,52 @@ TCID-VMWx-Portal-GUI-Auth:
     <<: *global_cache
     policy: pull
 
-.cypress-e2e:
-  when: always
-  stage: gui-tests
-  dependencies:
-    - Portal-Setup
-  image:
-    name: jonsy13/cypress:buster-slim
-  tags:
-    - kubera-litmus
-  artifacts:
-    when: always
-    paths:
-      - CypressE2E/cypress/screenshots
-  cache:
-    <<: *global_cache
-    policy: pull
+# .cypress-e2e:
+#   when: always
+#   stage: gui-tests
+#   dependencies:
+#     - Portal-Setup
+#   image:
+#     name: jonsy13/cypress:buster-slim
+#   tags:
+#     - kubera-litmus
+#   artifacts:
+#     when: always
+#     paths:
+#       - CypressE2E/cypress/screenshots
+#   cache:
+#     <<: *global_cache
+#     policy: pull
 
-TCID-VMWx-Portal-GUI-Routes:
-  extends: .cypress-e2e
-  script:
-    - source url.txt
-    - make routes-check
+# TCID-VMWx-Portal-GUI-Routes:
+#   extends: .cypress-e2e
+#   script:
+#     - source url.txt
+#     - make routes-check
 
-TCID-VMWx-portal-GUI-ScheduleWorkflow:
-  extends: .cypress-e2e
-  script: 
-    - source url.txt
-    - make create-workflow-check
+# TCID-VMWx-portal-GUI-ScheduleWorkflow:
+#   extends: .cypress-e2e
+#   script: 
+#     - source url.txt
+#     - make create-workflow-check
 
-TCID-VMWx-Portal-GUI-CommunityData:
-  extends: .cypress-e2e
-  script: 
-    - source url.txt
-    - make community-page-check
+# TCID-VMWx-Portal-GUI-CommunityData:
+#   extends: .cypress-e2e
+#   script: 
+#     - source url.txt
+#     - make community-page-check
 
-TCID-VMWx-Portal-GUI-AccountSettings:
-  extends: .cypress-e2e
-  script: 
-    - source url.txt
-    - make account-settings-check
+# TCID-VMWx-Portal-GUI-AccountSettings:
+#   extends: .cypress-e2e
+#   script: 
+#     - source url.txt
+#     - make account-settings-check
 
-TCID-VMWx-Portal-GUI-BrowseWorkflows:
-  extends: .cypress-e2e
-  script: 
-    - source url.txt
-    - make browse-workflow-check
+# TCID-VMWx-Portal-GUI-BrowseWorkflows:
+#   extends: .cypress-e2e
+#   script: 
+#     - source url.txt
+#     - make browse-workflow-check
 
 # e2e-metric:
 #   when: always
