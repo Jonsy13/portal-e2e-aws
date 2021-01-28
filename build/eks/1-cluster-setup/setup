@@ -13,14 +13,17 @@ cluster_name="portal-e2e-litmus-"$CI_PIPELINE_ID
 # setup aws configuration
 echo '#### SETTING UP AWS CONFIGURATION ####'
 aws configure set default.region ${region}
+echo 'Region set'
 aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+echo 'id set'
 aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
-
-echo 'Starting creation script'
+echo 'secret set'
 
 # creating an eks cluster with the given cluster info
 chmod +x build/eks/eks_bootstrap_script
 ./build/eks/eks_bootstrap_script -c ${cluster_name} -n ${nodes} -r ${region} -m ${node_type} up
+
+echo 'Creation script done'
 
 # use context of $HOME/.kube/config
 mkdir $path/.kube
