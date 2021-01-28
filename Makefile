@@ -28,7 +28,8 @@ pre-test-setup:
 	@echo "Started Pre-test-setup"
 	@echo "Testing of Login system, welcome-modal functionality and creation of workflow will be done here."
 	@echo "-----------"
-	cd Cypress && CYPRESS_BASE_URL=${URL} npm run BasicSetup_Tests
+	@echo $(URL)
+	cd Cypress && CYPRESS_BASE_URL=$(URL) npm run BasicSetup_Tests
 
 .PHONY: routes-check
 routes-check:
@@ -37,7 +38,7 @@ routes-check:
 	@echo "Started Routes Testing"
 	@echo "Testing of all routes before and after login will be done here."
 	@echo "-----------"
-	cd Cypress && CYPRESS_BASE_URL=${URL} npm run Routes_Tests
+	cd Cypress && CYPRESS_BASE_URL=$(URL) npm run Routes_Tests
 
 .PHONY: account-settings-check
 account-settings-check:
@@ -46,7 +47,7 @@ account-settings-check:
 	@echo "Started Account-Settings Tests"
 	@echo "Testing user-management,teaming and user details will be done here."
 	@echo "-----------"
-	cd Cypress && CYPRESS_BASE_URL=${URL} npm run AccountSettings_Tests
+	cd Cypress && CYPRESS_BASE_URL=$(URL) npm run AccountSettings_Tests
 
 .PHONY: browse-workflow-check
 browse-workflow-check:
@@ -55,7 +56,7 @@ browse-workflow-check:
 	@echo "Started Browse-Tables Tests"
 	@echo "Testing of functionality of browse-workflow, browse-schedules and browse-templates tables will be done here."
 	@echo "-----------"
-	cd Cypress && CYPRESS_BASE_URL=${URL} npm run BrowseWorkflow_Tests
+	cd Cypress && CYPRESS_BASE_URL=$(URL) npm run BrowseWorkflow_Tests
 
 .PHONY: create-workflow-check
 create-workflow-check:
@@ -64,7 +65,7 @@ create-workflow-check:
 	@echo "Started Schedule Workflow Tests"
 	@echo "Testing of Workflow scheduling functionality"
 	@echo "-----------"
-	 cd Cypress && CYPRESS_BASE_URL=${URL} npm run CreateWorkflow_Tests
+	 cd Cypress && CYPRESS_BASE_URL=$(URL) npm run CreateWorkflow_Tests
 
 .PHONY: community-page-check
 community-page-check:
@@ -73,7 +74,7 @@ community-page-check:
 	@echo "Started Community page tests."
 	@echo "Testing of community page data will be done here."
 	@echo "-----------"
-	cd Cypress && CYPRESS_BASE_URL=${URL} npm run Community_Tests
+	cd Cypress && CYPRESS_BASE_URL=$(URL) npm run Community_Tests
 
 .PHONY: e2e-metrics
 e2e-metrics:
