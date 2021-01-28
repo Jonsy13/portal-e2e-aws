@@ -67,7 +67,7 @@ TCID-VMWx-Portal-GUI-Auth:
   script:
     - source url.txt
     - echo $URL
-    - make pre-test-setup
+    - URL=$URL make pre-test-setup
   artifacts:
     when: always
     paths:
@@ -97,31 +97,31 @@ TCID-VMWx-Portal-GUI-Routes:
   extends: .cypress-e2e
   script:
     - source url.txt
-    - make routes-check
+    - URL=$URL make routes-check
 
 TCID-VMWx-portal-GUI-ScheduleWorkflow:
   extends: .cypress-e2e
   script: 
     - source url.txt
-    - make create-workflow-check
+    -  URL=$URL make create-workflow-check
 
 TCID-VMWx-Portal-GUI-CommunityData:
   extends: .cypress-e2e
   script: 
     - source url.txt
-    - make community-page-check
+    -  URL=$URL make community-page-check
 
 TCID-VMWx-Portal-GUI-AccountSettings:
   extends: .cypress-e2e
   script: 
     - source url.txt
-    - make account-settings-check
+    - URL=$URL make account-settings-check
 
 TCID-VMWx-Portal-GUI-BrowseWorkflows:
   extends: .cypress-e2e
   script: 
     - source url.txt
-    - make browse-workflow-check
+    -  URL=$URL make browse-workflow-check
 
 e2e-metric:
   when: always
