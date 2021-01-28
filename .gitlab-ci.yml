@@ -58,8 +58,8 @@ Cypress-Setup:
 TCID-VMWx-Portal-GUI-Auth:
   when: always
   stage: basic-auth-tests
-  dependencies:
-    - Portal-Setup
+  # dependencies:
+  #   - Portal-Setup
   image:
     name: jonsy13/cypress-small:buster-slim
   tags:
