@@ -1,9 +1,6 @@
 # Makefile for building litmus-e2e
 # Reference Guide - https://www.gnu.org/software/make/manual/make.html
 
-
-# IS_DOCKER_INSTALLED = $(shell which docker >> /dev/null 2>&1; echo $$?)
-
 .PHONY: install-portal
 install-portal:
 
@@ -28,7 +25,6 @@ pre-test-setup:
 	@echo "Started Pre-test-setup"
 	@echo "Testing of Login system, welcome-modal functionality and creation of workflow will be done here."
 	@echo "-----------"
-	@echo $(URL)
 	cd Cypress && CYPRESS_BASE_URL=$(URL) npm run BasicSetup_Tests
 
 .PHONY: routes-check
