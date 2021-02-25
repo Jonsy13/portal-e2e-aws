@@ -1,17 +1,14 @@
 # Makefile for building litmus-e2e
 # Reference Guide - https://www.gnu.org/software/make/manual/make.html
 
-
-# IS_DOCKER_INSTALLED = $(shell which docker >> /dev/null 2>&1; echo $$?)
-
 .PHONY: install-portal
 install-portal:
 
 	@echo "-----------"
 	@echo "Installing Litmus-Portal"
 	@echo "-----------"
-	chmod 755 k8s_scripts/LitmusInstall.sh
-	./k8s_scripts/LitmusInstall.sh
+	chmod 755 litmus/setup.sh
+	./litmus/setup.sh
 
 .PHONY: cypress-setup
 cypress-setup:
@@ -90,5 +87,5 @@ uninstall-portal:
 	@echo "-----------"
 	@echo "Uninstalling Litmus-Portal"
 	@echo "-----------"
-	chmod 755 k8s_scripts/LitmusUninstall.sh
-	./k8s_scripts/LitmusUninstall.sh
+	chmod 755 litmus/cleanup.sh
+	./litmus/cleanup.sh
