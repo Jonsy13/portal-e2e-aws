@@ -46,12 +46,12 @@ def get_file_to_update(pipeline,tag):
        else:
               return "portal-pipeline/pipeline-runs/portal-ga.html"
 
-repo = github_token.get_repo("Jonsy13/portal-e2e-aws")
-b= repo.get_branch(branch="master-results")
+repo = github_token.get_repo("Jonsy13/Pipeline-Updates-Test")
+b= repo.get_branch(branch="master")
 filename = get_file_to_update(pipeline,tag)
 print("filename to be updated: "+filename)
-contents = repo.get_contents(filename, "master-results")
-file = repo.get_contents(contents.path, "master-results")
+contents = repo.get_contents(filename, "master")
+file = repo.get_contents(contents.path, "master")
 file_path = contents.path
 file_content=str(file.decoded_content)
 content_list = file_content.split('\n')
@@ -64,7 +64,7 @@ pipeline_url ="<a href= \"https://gitlab.com/Jonsy13/portal-e2e-aws/pipelines/{0
 def fetch_file_content():
     # fetching file contents of github file_path
     count=0
-    file = repo.get_contents(file_path, "master-results")
+    file = repo.get_contents(file_path, "master")
     file_content=str(file.decoded_content, 'utf-8')
     content_list = file_content.split('\n')
     totalCoverage= '<a href=\"https://bit.ly/2OLie8t\"><img alt='+coverage+'% src=\"https://progress-bar.dev/'+coverage+'\" /></a>'
@@ -111,7 +111,7 @@ print("Trying to update respective html files at path: {}".format(file_path))
 try:
     print("Pipeline table content update try: {}".format(try_count))
     try_count += 1
-    repo.update_file(file_path, commit_message, updated_file_content, file.sha, branch="master-results")
+    repo.update_file(file_path, commit_message, updated_file_content, file.sha, branch="master")
     print("Pipeline table updated successfully")
 except github.GithubException as e:
     exception = e
@@ -133,7 +133,7 @@ except github.GithubException as e:
        try_count += 1
 
        # retry committing Pipeline table file 
-       repo.update_file(file_path, commit_message, updated_file_content, file.sha, branch="master-results")
+       repo.update_file(file_path, commit_message, updated_file_content, file.sha, branch="master")
        print("Pipeline table updated successfully")
 
        # exit the loop as file updated successfully
