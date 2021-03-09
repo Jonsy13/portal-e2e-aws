@@ -4,7 +4,6 @@ stages:
   - cypress-setup
   - basic-auth-tests
   - gui-tests
-  - e2e-metrics
   - portal-cleanup
   - cluster-cleanup
 
@@ -55,7 +54,7 @@ Cypress-Setup:
   script:
     - make cypress-setup
 
-TCID-VMWx-Portal-GUI-Auth:
+TCID-EKS-Portal-GUI-Auth:
   when: always
   stage: basic-auth-tests
   dependencies:
@@ -66,7 +65,6 @@ TCID-VMWx-Portal-GUI-Auth:
     - kubera-litmus
   script:
     - source url.txt
-    - echo $URL
     - URL=$URL make pre-test-setup
   artifacts:
     when: always
@@ -93,48 +91,35 @@ TCID-VMWx-Portal-GUI-Auth:
     <<: *global_cache
     policy: pull
 
-TCID-VMWx-Portal-GUI-Routes:
+TCID-EKS-Portal-GUI-Routes:
   extends: .cypress-e2e
   script:
     - source url.txt
     - URL=$URL make routes-check
 
-TCID-VMWx-portal-GUI-ScheduleWorkflow:
+TCID-EKS-portal-GUI-ScheduleWorkflow:
   extends: .cypress-e2e
   script: 
     - source url.txt
-    -  URL=$URL make create-workflow-check
+    - URL=$URL make create-workflow-check
 
-TCID-VMWx-Portal-GUI-CommunityData:
+TCID-EKS-Portal-GUI-CommunityData:
   extends: .cypress-e2e
   script: 
     - source url.txt
-    -  URL=$URL make community-page-check
+    - URL=$URL make community-page-check
 
-TCID-VMWx-Portal-GUI-AccountSettings:
+TCID-EKS-Portal-GUI-AccountSettings:
   extends: .cypress-e2e
   script: 
     - source url.txt
     - URL=$URL make account-settings-check
 
-TCID-VMWx-Portal-GUI-BrowseWorkflows:
+TCID-EKS-Portal-GUI-BrowseWorkflows:
   extends: .cypress-e2e
   script: 
     - source url.txt
-    -  URL=$URL make browse-workflow-check
-
-e2e-metric:
-  when: always
-  stage: e2e-metrics
-  tags: 
-    - kubera-litmus
-  script:
-    - make e2e-metrics
-  artifacts:
-    when: always
-    paths:
-      - .kube/
-  cache: {}
+    - URL=$URL make browse-workflow-check
 
 portal-cleanup:
   when: always
@@ -143,6 +128,19 @@ portal-cleanup:
     - kubera-litmus
   script:
     - make uninstall-portal
+  artifacts:
+    when: always
+    paths:
+      - .kube/
+  cache: {}
+
+Pipeline Status Update:
+  when: always
+  stage: portal-cleanup
+  tags: 
+    - kubera-litmus
+  script:
+    - make pipeline-status-update
   artifacts:
     when: always
     paths:
