@@ -1,11 +1,11 @@
 stages:
-  - cluster-setup
-  - portal-setup
-  # - cypress-setup
+  # - cluster-setup
+  # - portal-setup
+  - cypress-setup
   # - basic-auth-tests
   # - gui-tests
-  - portal-cleanup
-  - cluster-cleanup
+  # - portal-cleanup
+  # - cluster-cleanup
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
