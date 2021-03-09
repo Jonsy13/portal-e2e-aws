@@ -1,5 +1,7 @@
 #!/bin/bash
 set -ex
+
+cd .. ## Going into root directory for getting kubeconfig
 path=$(pwd)
 
 # # Setting up the kubeconfig
