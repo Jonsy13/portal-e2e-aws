@@ -23,5 +23,5 @@ jobs:
       - name: Build and Push the Docker Image
         run: |
           cd build
-          docker build . -t ${{steps.vars.outputs.repoOwner}}/Cypress:${{ steps.vars.outputs.img_tag }} -f Dockerfile.Cypress 
-          docker push ${{steps.vars.outputs.repoOwner}}/Cypress:${{ steps.vars.outputs.img_tag }}
+          docker build . -t ${{steps.vars.outputs.repoOwner}}/cypress:${{ steps.vars.outputs.img_tag }} -f Dockerfile.Cypress 
+          docker push ${{steps.vars.outputs.repoOwner}}/cypress:${{ steps.vars.outputs.img_tag }}
