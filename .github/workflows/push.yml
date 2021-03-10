@@ -3,7 +3,7 @@ name: Cypress-Push
 on:
   push:
     branches:
-      - litmus-portal
+      - master
     paths:
       - 'build/Dockerfile.Cypress'
 

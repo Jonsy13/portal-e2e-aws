@@ -3,7 +3,7 @@ name: Cypress-Build
 on:
   pull_request:
     branches:
-      - litmus-portal
+      - master
     types: [ opened, synchronize, reopened ]
     paths:
       - 'build/Dockerfile.Cypress'
