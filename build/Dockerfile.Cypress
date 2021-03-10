@@ -11,8 +11,8 @@ RUN apt-get update && \
 RUN npm install -g npm@latest
 RUN npm --version
 
-# a few environment variables to make NPM installs easier
-# good colors for most applications
+# few environment variables to make NPM installs easier
+# good colors for most applicatio
 ENV TERM xterm
 # avoid million NPM install messages
 ENV npm_config_loglevel warn
