@@ -40,13 +40,13 @@ github_token = Github(token)
 
 def get_file_to_update(pipeline,tag):
        if tag == "ci":
-              return "portal-pipeline/pipeline-runs/portal.html"
+              return "portal-pipeline/pipeline-runs/portal-run.html"
        elif "RC" in tag:
               return "portal-pipeline/pipeline-runs/portal-rc.html"
        else:
               return "portal-pipeline/pipeline-runs/portal-ga.html"
 
-repo = github_token.get_repo("Jonsy13/Pipeline-Updates-Test")
+repo = github_token.get_repo("Jonsy13/test-litmus-e2e")
 b= repo.get_branch(branch="master")
 filename = get_file_to_update(pipeline,tag)
 print("filename to be updated: "+filename)

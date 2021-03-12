@@ -1,11 +1,11 @@
 stages:
-  # - cluster-setup
-  # - portal-setup
-  - cypress-setup
+  - cluster-setup
+  - portal-setup
+  # - cypress-setup
   # - basic-auth-tests
   # - gui-tests
-  # - portal-cleanup
-  # - cluster-cleanup
+  - portal-cleanup
+  - cluster-cleanup
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
@@ -18,41 +18,41 @@ cache: &global_cache
     - cache/Cypress
     - Cypress/node_modules
 
-# EKS-Setup:
-#   stage: cluster-setup
-#   tags:
-#     - kubera-litmus
-#   script:
-#     - chmod 755 build/eks/1-cluster-setup/setup
-#     - ./build/eks/1-cluster-setup/setup
-#   artifacts:
-#     when: always
-#     paths:
-#       - .kube/
-#   cache: {}
-
-# Portal-Setup:
-#   when: always
-#   stage: portal-setup
-#   tags: 
-#     - kubera-litmus
-#   script:
-#     - make install-portal
-#   artifacts:
-#     when: always
-#     paths:
-#       - .kube/
-#       - url.txt
-#   cache: {}
-
-Cypress-Setup:
-  when: always
-  stage: cypress-setup
-  image: ${CYPRESS_IMAGE}
+EKS-Setup:
+  stage: cluster-setup
   tags:
     - kubera-litmus
   script:
-    - make cypress-setup
+    - chmod 755 build/eks/1-cluster-setup/setup
+    - ./build/eks/1-cluster-setup/setup
+  artifacts:
+    when: always
+    paths:
+      - .kube/
+  cache: {}
+
+Portal-Setup:
+  when: always
+  stage: portal-setup
+  tags: 
+    - kubera-litmus
+  script:
+    - make install-portal
+  artifacts:
+    when: always
+    paths:
+      - .kube/
+      - url.txt
+  cache: {}
+
+# Cypress-Setup:
+#   when: always
+#   stage: cypress-setup
+#   image: ${CYPRESS_IMAGE}
+#   tags:
+#     - litmus-portal
+#   script:
+#     - make cypress-setup
 
 # TCID-EKS-Portal-GUI-Auth:
 #   when: always
@@ -60,9 +60,9 @@ Cypress-Setup:
 #   dependencies:
 #     - Portal-Setup
 #   image:
-#     name: jonsy13/cypress:buster-slim
+#     name: ${CYPRESS_IMAGE}
 #   tags:
-#     - kubera-litmus
+#     - litmus-portal
 #   script:
 #     - source url.txt
 #     - URL=$URL make pre-test-setup
@@ -80,9 +80,9 @@ Cypress-Setup:
 #   dependencies:
 #     - Portal-Setup
 #   image:
-#     name: jonsy13/cypress:buster-slim
+#     name: ${CYPRESS_IMAGE}
 #   tags:
-#     - kubera-litmus
+#     - litmus-portal
 #   artifacts:
 #     when: always
 #     paths:
@@ -121,42 +121,42 @@ Cypress-Setup:
 #     - source url.txt
 #     - URL=$URL make browse-workflow-check
 
-# portal-cleanup:
-#   when: always
-#   stage: portal-cleanup
-#   tags: 
-#     - kubera-litmus
-#   script:
-#     - make uninstall-portal
-#   artifacts:
-#     when: always
-#     paths:
-#       - .kube/
-#   cache: {}
+Portal-Cleanup:
+  when: always
+  stage: portal-cleanup
+  tags: 
+    - kubera-litmus
+  script:
+    - make uninstall-portal
+  artifacts:
+    when: always
+    paths:
+      - .kube/
+  cache: {}
 
-# Pipeline Status Update:
-#   when: always
-#   stage: portal-cleanup
-#   tags: 
-#     - kubera-litmus
-#   script:
-#     - make pipeline-status-update
-#   artifacts:
-#     when: always
-#     paths:
-#       - .kube/
-#   cache: {}
+Pipeline Status Update:
+  when: always
+  stage: portal-cleanup
+  tags: 
+    - kubera-litmus
+  script:
+    - make pipeline-status-update
+  artifacts:
+    when: always
+    paths:
+      - .kube/
+  cache: {}
     
-# EKS-Cleanup:
-#   when: always
-#   stage: cluster-cleanup
-#   tags:
-#     - kubera-litmus
-#   script:
-#     - chmod 755 build/eks/2-cluster-cleanup/cleanup
-#     - ./build/eks/2-cluster-cleanup/cleanup
-#   artifacts:
-#     when: always
-#     paths:
-#       - .kube/
-#   cache: {}
+EKS-Cleanup:
+  when: always
+  stage: cluster-cleanup
+  tags:
+    - kubera-litmus
+  script:
+    - chmod 755 build/eks/2-cluster-cleanup/cleanup
+    - ./build/eks/2-cluster-cleanup/cleanup
+  artifacts:
+    when: always
+    paths:
+      - .kube/
+  cache: {}
