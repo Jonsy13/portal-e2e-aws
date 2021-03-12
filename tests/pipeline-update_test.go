@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"strings"
 	"testing"
-
+	"github.com/Jonsy13/portal-e2e-aws/pkg/environment"
 	"github.com/Jonsy13/portal-e2e-aws/pkg"
 	"github.com/Jonsy13/portal-e2e-aws/pkg/types"
 	. "github.com/onsi/ginkgo"
@@ -27,8 +27,9 @@ var _ = Describe("BDD of pipeline status update", func() {
 
 	// BDD for overall pipeline result update
 	Context("Check for the overall pipeline update", func() {
-
+		
 		testsDetails := types.TestDetails{}
+		environment.GetENV(&testsDetails, "pipeline-update", "")
 		if testsDetails.UpdateWebsite == "true" {
 			It("Should check for the result updation", func() {
 
