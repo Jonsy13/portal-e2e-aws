@@ -1,9 +1,9 @@
 stages:
   - cluster-setup
   - portal-setup
-  # - cypress-setup
-  # - basic-auth-tests
-  # - gui-tests
+  - cypress-setup
+  - basic-auth-tests
+  - gui-tests
   - portal-cleanup
   - cluster-cleanup
 
@@ -45,81 +45,81 @@ Portal-Setup:
       - url.txt
   cache: {}
 
-# Cypress-Setup:
-#   when: always
-#   stage: cypress-setup
-#   image: ${CYPRESS_IMAGE}
-#   tags:
-#     - litmus-portal
-#   script:
-#     - make cypress-setup
+Cypress-Setup:
+  when: always
+  stage: cypress-setup
+  image: ${CYPRESS_IMAGE}
+  tags:
+    - kubera-litmus
+  script:
+    - make cypress-setup
 
-# TCID-EKS-Portal-GUI-Auth:
-#   when: always
-#   stage: basic-auth-tests
-#   dependencies:
-#     - Portal-Setup
-#   image:
-#     name: ${CYPRESS_IMAGE}
-#   tags:
-#     - litmus-portal
-#   script:
-#     - source url.txt
-#     - URL=$URL make pre-test-setup
-#   artifacts:
-#     when: always
-#     paths:
-#       - Cypress/cypress/screenshots
-#   cache:
-#     <<: *global_cache
-#     policy: pull
+TCID-EKS-Portal-GUI-Auth:
+  when: always
+  stage: basic-auth-tests
+  dependencies:
+    - Portal-Setup
+  image:
+    name: ${CYPRESS_IMAGE}
+  tags:
+    - kubera-litmus
+  script:
+    - source url.txt
+    - URL=$URL make pre-test-setup
+  artifacts:
+    when: always
+    paths:
+      - Cypress/cypress/screenshots
+  cache:
+    <<: *global_cache
+    policy: pull
 
-# .cypress-e2e:
-#   when: always
-#   stage: gui-tests
-#   dependencies:
-#     - Portal-Setup
-#   image:
-#     name: ${CYPRESS_IMAGE}
-#   tags:
-#     - litmus-portal
-#   artifacts:
-#     when: always
-#     paths:
-#       - Cypress/cypress/screenshots
-#   cache:
-#     <<: *global_cache
-#     policy: pull
+.cypress-e2e:
+  when: always
+  stage: gui-tests
+  dependencies:
+    - Portal-Setup
+  image:
+    name: ${CYPRESS_IMAGE}
+  tags:
+    - kubera-litmus
+  artifacts:
+    when: always
+    paths:
+      - Cypress/cypress/screenshots
+  cache:
+    <<: *global_cache
+    policy: pull
 
-# TCID-EKS-Portal-GUI-Routes:
-#   extends: .cypress-e2e
-#   script:
-#     - source url.txt
-#     - URL=$URL make routes-check
+TCID-EKS-Portal-GUI-Routes:
+  extends: .cypress-e2e
+  script:
+    - source url.txt
+    - URL=$URL make routes-check
 
-# TCID-EKS-portal-GUI-ScheduleWorkflow:
-#   extends: .cypress-e2e
-#   script: 
-#     - source url.txt
-#     - URL=$URL make create-workflow-check
+TCID-EKS-portal-GUI-ScheduleWorkflow:
+  extends: .cypress-e2e
+  script: 
+    - source url.txt
+    - URL=$URL make create-workflow-check
 
-# TCID-EKS-Portal-GUI-CommunityData:
-#   extends: .cypress-e2e
-#   script: 
-#     - source url.txt
-#     - URL=$URL make community-page-check
+TCID-EKS-Portal-GUI-CommunityData:
+  extends: .cypress-e2e
+  script: 
+    - source url.txt
+    - URL=$URL make community-page-check
 
-# TCID-EKS-Portal-GUI-AccountSettings:
-#   extends: .cypress-e2e
-#   script: 
-#     - source url.txt
-#     - URL=$URL make account-settings-check
+TCID-EKS-Portal-GUI-AccountSettings:
+  extends: .cypress-e2e
+  script: 
+    - source url.txt
+    - URL=$URL make account-settings-check
 
-# TCID-EKS-Portal-GUI-BrowseWorkflows:
-#   extends: .cypress-e2e
-#   script: 
-#     - source url.txt
-#     - URL=$URL make browse-workflow-check
+TCID-EKS-Portal-GUI-BrowseWorkflows:
+  extends: .cypress-e2e
+  script: 
+    - source url.txt
+    - URL=$URL make browse-workflow-check
 
 Portal-Cleanup:
   when: always
