@@ -47,11 +47,11 @@ def get_file_to_update(pipeline,tag):
               return "portal-pipeline/pipeline-runs/portal-ga.html"
 
 repo = github_token.get_repo("Jonsy13/test-litmus-e2e")
-b= repo.get_branch(branch="master")
+b= repo.get_branch(branch="main")
 filename = get_file_to_update(pipeline,tag)
 print("filename to be updated: "+filename)
-contents = repo.get_contents(filename, "master")
-file = repo.get_contents(contents.path, "master")
+contents = repo.get_contents(filename, "main")
+file = repo.get_contents(contents.path, "main")
 file_path = contents.path
 file_content=str(file.decoded_content)
 content_list = file_content.split('\n')
@@ -64,7 +64,7 @@ pipeline_url ="<a href= \"https://gitlab.com/Jonsy13/portal-e2e-aws/pipelines/{0
 def fetch_file_content():
     # fetching file contents of github file_path
     count=0
-    file = repo.get_contents(file_path, "master")
+    file = repo.get_contents(file_path, "main")
     file_content=str(file.decoded_content, 'utf-8')
     content_list = file_content.split('\n')
     totalCoverage= '<a href=\"https://bit.ly/2OLie8t\"><img alt='+coverage+'% src=\"https://progress-bar.dev/'+coverage+'\" /></a>'
@@ -73,8 +73,8 @@ def fetch_file_content():
     else:
            version_name = "Release Version"
     # updating result's table if the table is already present
-    if file_content.find('<table>\n <tr>\n  <th>Pipeline ID</th>\n  <th>Execution Time</th>\n  <th>'+version_name+'</th></tr>\n')>0:
-        new_pipeline = ' <tr>\n  <td>{}</td>\n  <td>{}</td>\n  <td>{}</td>\n </tr>\n'.format(pipeline_url,time_stamp,tag)
+    if file_content.find('<table>\n <tr>\n  <th>Pipeline ID</th>\n  <th>Execution Time</th>\n  <th>'+version_name+'</th>\n <th>Coverage</th>\n </tr>\n')>0:
+        new_pipeline = ' <tr>\n  <td>{}</td>\n  <td>{}</td>\n  <td>{}</td>\n<td>{}</td> </tr>\n'.format(pipeline_url,time_stamp,tag,totalCoverage)
         index = content_list.index('  <th>'+version_name+'</th></tr>')
         content_list.insert(index+2,new_pipeline)
         for line in content_list:
@@ -89,8 +89,8 @@ def fetch_file_content():
 
     # creating result's table for first pipeline result entry 
     else:
-        updated_file_content =  '<table>\n <tr>\n  <th>Pipeline ID</th>\n  <th>Execution Time</th>\n  <th>'+version_name+'</th></tr>\n'
-        updated_file_content = updated_file_content + (' <tr>\n  <td>{}</td>\n  <td>{}</td>\n  <td>{}</td>\n </tr>\n'.format(pipeline_url,time_stamp,tag))
+        updated_file_content =  '<table>\n <tr>\n  <th>Pipeline ID</th>\n  <th>Execution Time</th>\n  <th>'+version_name+'</th>\n <th>Coverage</th>\n </tr>\n'
+        updated_file_content = updated_file_content + (' <tr>\n  <td>{}</td>\n  <td>{}</td>\n  <td>{}</td>\n <td>{}</td>\n </tr>\n'.format(pipeline_url,time_stamp,tag,totalCoverage))
         updated_file_content = updated_file_content + '</table>'
         index = len(content_list)
         content_list.insert(index, updated_file_content)
@@ -111,7 +111,7 @@ print("Trying to update respective html files at path: {}".format(file_path))
 try:
     print("Pipeline table content update try: {}".format(try_count))
     try_count += 1
-    repo.update_file(file_path, commit_message, updated_file_content, file.sha, branch="master")
+    repo.update_file(file_path, commit_message, updated_file_content, file.sha, branch="main")
     print("Pipeline table updated successfully")
 except github.GithubException as e:
     exception = e
@@ -133,7 +133,7 @@ except github.GithubException as e:
        try_count += 1
 
        # retry committing Pipeline table file 
-       repo.update_file(file_path, commit_message, updated_file_content, file.sha, branch="master")
+       repo.update_file(file_path, commit_message, updated_file_content, file.sha, branch="main")
        print("Pipeline table updated successfully")
 
        # exit the loop as file updated successfully

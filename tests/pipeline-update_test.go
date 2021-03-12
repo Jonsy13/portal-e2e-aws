@@ -32,8 +32,6 @@ var _ = Describe("BDD of pipeline status update", func() {
 		environment.GetENV(&testsDetails, "pipeline-update", "")
 		if testsDetails.UpdateWebsite == "true" {
 			It("Should check for the result updation", func() {
-
-				testsDetails := types.TestDetails{}
 				var err error
 				var out, stderr bytes.Buffer
 
